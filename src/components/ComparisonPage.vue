@@ -126,7 +126,7 @@
           class="searchInput"
         />
 
-        <div class="productList">
+        <div>
           <div
             v-for="product in filteredHiddenProducts"
             :key="product.id"
@@ -265,7 +265,6 @@ export default defineComponent({
 .specHeader {
   padding-bottom: 77px;
 }
-
 .comparisonMain {
   max-width: 100%;
   overflow-y: auto;
@@ -336,27 +335,6 @@ export default defineComponent({
 
 .controlBtn.active {
   border-bottom: 1px solid #0d5adc;
-}
-
-.replace-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(0, 123, 255, 0.9);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.replace-btn:hover {
-  background: rgba(0, 123, 255, 1);
 }
 
 .productName {
@@ -481,8 +459,8 @@ export default defineComponent({
   box-shadow: 0 16px 32px 0px #2327331a;
   border: 1px solid #e3e3e3;
   z-index: 3;
+  scrollbar-color: #e3e3e3 transparent;
 }
-
 .searchInput {
   box-sizing: border-box;
   width: 95%;
@@ -492,21 +470,6 @@ export default defineComponent({
   border-radius: 4px;
   font-size: 24px;
   color: #b0b0b0;
-}
-
-.productList {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
-}
-
-.productList::-webkit-scrollbar {
-  width: 6px;
-}
-
-.productList::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 3px;
 }
 
 .productItem {
