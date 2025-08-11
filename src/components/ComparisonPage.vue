@@ -1,7 +1,6 @@
 <template>
   <div class="comparisonContainer">
-    <!-- Header Section -->
-    <header class="comparisonHeader">
+    <div class="comparisonHeader">
       <div class="container">
         <h1 class="categoryTitle">Смартфоны</h1>
         <div class="displayControls">
@@ -21,7 +20,7 @@
           </div>
         </div>
       </div>
-    </header>
+    </div>
 
     <main class="comparisonMain">
       <div class="container">
@@ -152,7 +151,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch,
+  nextTick,
+} from "vue";
 import { useComparisonStore } from "@/stores/comparisonStore";
 
 export default defineComponent({
@@ -239,6 +245,28 @@ export default defineComponent({
       }).format(numPrice);
     }
 
+    onMounted(() => {
+      updateTbodyHeight();
+    });
+
+    watch(displayedProducts, () => {
+      nextTick(() => {
+        updateTbodyHeight();
+      });
+    });
+
+    function updateTbodyHeight() {
+      const tbodyElement = document.querySelector(".tableBody");
+      if (tbodyElement) {
+        const tbodyHeight = tbodyElement.offsetHeight;
+        //может просто отключить линтер для этой строчки?
+        document.documentElement.style.setProperty(
+          "--tbody-height",
+          `${tbodyHeight}px`
+        );
+      }
+    }
+
     return {
       displayCount,
       maxDisplayCount,
@@ -262,6 +290,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+:root {
+  --tbody-height: auto;
+}
+
 .specHeader {
   padding-bottom: 77px;
 }
@@ -275,6 +307,17 @@ export default defineComponent({
 .tableHeader {
   vertical-align: bottom;
   border-bottom: 1px solid #cdcfd2;
+}
+
+.tableBody::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 100vw;
+  height: var(--tbody-height);
+  background-color: #f4f9fc;
+  z-index: -1;
+  pointer-events: none;
 }
 .comparisonContainer {
   display: flex;
